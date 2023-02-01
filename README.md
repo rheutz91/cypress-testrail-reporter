@@ -6,17 +6,11 @@
 
 Publishes [Cypress](https://www.cypress.io/) runs on TestRail.
 
-Cloned from the original package [cypress-testrail-reporter](https://github.com/Vivify-Ideas/cypress-testrail-reporter) by [Milutin Savovic](https://github.com/mickosav)
-
-The original package by Milutin is awesome!
-
-Allows for options to create a new test run on **cypress run** or if you want the option to create one manually.
-
 
 ## Install
 
 ```shell
-$ npm install salty-cypress-testrail-reporter --save-dev
+$ npm install @rheutz/cypress-testrail-reporter --save-dev
 ```
 
 ## Usage
@@ -26,11 +20,11 @@ Add reporter to your `cypress.json`:
 ```json
 ...
 {
-  "reporter": "salty-cypress-testrail-reporter",
+  "reporter": "@rheutz/cypress-testrail-reporter",
   "reporterOptions": {
     "domain": "yourdomain.testrail.com",
-    "username": "username",
-    "password": "password",
+    "username": "username",  // Or set CYPRESS_TESTRAIL_REPORTER_USERNAME env variabele
+    "password": "password",  // Or set CYPRESS_TESTRAIL_REPORTER_PASSWORD env variabele
     "projectId": idNumber,
     "suiteId": suiteNumber,
     "createTestRun": "boolean",
@@ -89,7 +83,7 @@ You can read the whole TestRail documentation [here](http://docs.gurock.com/).
 
 ## Author
 
-Author: Spencer Kekauoha - [github](https://github.com/skekauoha)
+Author: Ronald Heuts - [github](https://github.com/rheutz)
 
 ## License
 
@@ -99,4 +93,3 @@ This project is licensed under the [MIT license](/LICENSE.md).
 
 * [Milutin Savovic](https://github.com/mickosav), author of the [cypress-testrail-reporter](https://github.com/Vivify-Ideas/cypress-testrail-reporter) repository that was cloned.
 * [Pierre Awaragi](https://github.com/awaragi), owner of the [mocha-testrail-reporter](https://github.com/awaragi/mocha-testrail-reporter) repository that was forked.
-* [Valerie Thoma](https://github.com/ValerieThoma) and [Aileen Santos](https://github.com/asantos3026) for proofreading the README.md file and making it more understandable.
