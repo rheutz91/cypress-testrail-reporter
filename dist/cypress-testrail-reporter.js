@@ -15,7 +15,7 @@ var moment = require("moment");
 var testrail_1 = require("./testrail");
 var shared_1 = require("./shared");
 var testrail_interface_1 = require("./testrail.interface");
-var chalk = require('chalk');
+var chalk = require("chalk");
 var CypressTestRailReporter = /** @class */ (function (_super) {
     __extends(CypressTestRailReporter, _super);
     function CypressTestRailReporter(runner, options) {
@@ -24,28 +24,27 @@ var CypressTestRailReporter = /** @class */ (function (_super) {
         var reporterOptions = options.reporterOptions;
         _this.testRail = new testrail_1.TestRail(reporterOptions);
         _this.hasBeenCreatedToday = false;
-        _this.validate(reporterOptions, 'domain');
-        _this.validate(reporterOptions, 'username');
-        _this.validate(reporterOptions, 'password');
-        _this.validate(reporterOptions, 'projectId');
-        _this.validate(reporterOptions, 'suiteId');
-        _this.validate(reporterOptions, 'createTestRun');
-        runner.on('start', function () {
+        _this.validate(reporterOptions, "domain");
+        _this.validate(reporterOptions, "username");
+        _this.validate(reporterOptions, "password");
+        _this.validate(reporterOptions, "projectId");
+        _this.validate(reporterOptions, "suiteId");
+        _this.validate(reporterOptions, "createTestRun");
+        runner.on("start", function () {
             console.log("Running Test Case...");
-            var executionDateTime = moment().format('L');
-            var name = (reporterOptions.runName || 'Automated Test Run') + " - " + executionDateTime;
+            var executionDateTime = moment().format("L");
+            var name = (reporterOptions.runName || "Automated Test Run") + " - " + executionDateTime;
             var description = executionDateTime;
             if (reporterOptions.createTestRun === true) {
                 _this.testRail.isRunToday().then(function (res) {
                     _this.hasBeenCreatedToday = res;
-                    console.log(_this.hasBeenCreatedToday);
                     if (!_this.hasBeenCreatedToday) {
                         _this.testRail.createRun(name, description);
                     }
                 });
             }
         });
-        runner.on('pass', function (test) {
+        runner.on("pass", function (test) {
             var _a;
             var caseIds = shared_1.titleToCaseIds(test.title);
             if (caseIds.length > 0) {
@@ -59,7 +58,7 @@ var CypressTestRailReporter = /** @class */ (function (_super) {
                 (_a = _this.results).push.apply(_a, results);
             }
         });
-        runner.on('fail', function (test) {
+        runner.on("fail", function (test) {
             var _a;
             var caseIds = shared_1.titleToCaseIds(test.title);
             if (caseIds.length > 0) {
@@ -73,10 +72,10 @@ var CypressTestRailReporter = /** @class */ (function (_super) {
                 (_a = _this.results).push.apply(_a, results);
             }
         });
-        runner.on('end', function () {
+        runner.on("end", function () {
             if (_this.results.length == 0) {
-                console.log('\n', chalk.magenta.underline.bold('(TestRail Reporter)'));
-                console.warn('\n', 'No testcases were matched. Ensure that your tests are declared correctly and matches Cxxx', '\n');
+                console.log("\n", chalk.magenta.underline.bold("(TestRail Reporter)"));
+                console.warn("\n", "No testcases were matched. Ensure that your tests are declared correctly and matches Cxxx", "\n");
                 return;
             }
             _this.testRail.publishResults(_this.results);
@@ -85,10 +84,10 @@ var CypressTestRailReporter = /** @class */ (function (_super) {
     }
     CypressTestRailReporter.prototype.validate = function (options, name) {
         if (options == null) {
-            throw new Error('Missing reporterOptions in cypress.json');
+            throw new Error("Missing reporterOptions in cypress.json");
         }
         if (options[name] == null) {
-            throw new Error("Missing " + name + " value. Please update reporterOptions in cypress.json");
+            throw new Error("Missing " + name + " value. Please update reporterOptions in cypress.json or set CYPRESS_TESTRAIL_REPORTER_USERNAME and CYPRESS_TESTRAIL_REPORTER_PASSWORD environment variabele");
         }
     };
     return CypressTestRailReporter;

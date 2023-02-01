@@ -13,9 +13,16 @@ export class TestRail {
   private projectId: Number;
   private lastRunDate: string;
   private currentDate: string;
+  private auth: {username: string; password: string};
 
   constructor(private options: TestRailOptions) {
     this.base = `https://${options.domain}/index.php?/api/v2`;
+    this.auth = {
+      username:
+        process.env["CYPRESS_TESTRAIL_REPORTER_USERNAME"] || options.username,
+      password:
+        process.env["CYPRESS_TESTRAIL_REPORTER_PASSWORD"] || options.password,
+    };
   }
 
   private getLastRun(): Promise<TestRunResult> {
@@ -24,10 +31,7 @@ export class TestRail {
         method: "get",
         url: `${this.base}/get_runs/${this.options.projectId}`,
         headers: {"Content-Type": "application/json"},
-        auth: {
-          username: this.options.username,
-          password: this.options.password,
-        },
+        auth: this.auth,
       }).then((response) => {
         resolve(response.data.runs[0]);
       });
@@ -57,10 +61,7 @@ export class TestRail {
       method: "post",
       url: `${this.base}/add_run/${this.options.projectId}`,
       headers: {"Content-Type": "application/json"},
-      auth: {
-        username: this.options.username,
-        password: this.options.password,
-      },
+      auth: this.auth,
       data: JSON.stringify({
         suite_id: this.options.suiteId,
         name,
@@ -80,10 +81,7 @@ export class TestRail {
         method: "post",
         url: `${this.base}/add_results_for_cases/${this.runId}`,
         headers: {"Content-Type": "application/json"},
-        auth: {
-          username: this.options.username,
-          password: this.options.password,
-        },
+        auth: this.auth,
         data: JSON.stringify({results}),
       })
         .then((response) => {

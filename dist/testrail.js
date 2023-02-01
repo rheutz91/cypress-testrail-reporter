@@ -7,6 +7,10 @@ var TestRail = /** @class */ (function () {
     function TestRail(options) {
         this.options = options;
         this.base = "https://" + options.domain + "/index.php?/api/v2";
+        this.auth = {
+            username: process.env["CYPRESS_TESTRAIL_REPORTER_USERNAME"] || options.username,
+            password: process.env["CYPRESS_TESTRAIL_REPORTER_PASSWORD"] || options.password,
+        };
     }
     TestRail.prototype.getLastRun = function () {
         var _this = this;
@@ -15,10 +19,7 @@ var TestRail = /** @class */ (function () {
                 method: "get",
                 url: _this.base + "/get_runs/" + _this.options.projectId,
                 headers: { "Content-Type": "application/json" },
-                auth: {
-                    username: _this.options.username,
-                    password: _this.options.password,
-                },
+                auth: _this.auth,
             }).then(function (response) {
                 resolve(response.data.runs[0]);
             });
@@ -27,7 +28,6 @@ var TestRail = /** @class */ (function () {
     TestRail.prototype.isRunToday = function () {
         var _this = this;
         return this.getLastRun().then(function (lastRun) {
-            console.log("LastRun: ", lastRun);
             _this.lastRunDate = moment.unix(lastRun.created_on).format("MM/DD/YYYY");
             // set current date with same format as this.lastRunDate
             _this.currentDate = moment(new Date()).format("L");
@@ -46,10 +46,7 @@ var TestRail = /** @class */ (function () {
             method: "post",
             url: this.base + "/add_run/" + this.options.projectId,
             headers: { "Content-Type": "application/json" },
-            auth: {
-                username: this.options.username,
-                password: this.options.password,
-            },
+            auth: this.auth,
             data: JSON.stringify({
                 suite_id: this.options.suiteId,
                 name: name,
@@ -69,10 +66,7 @@ var TestRail = /** @class */ (function () {
                 method: "post",
                 url: _this.base + "/add_results_for_cases/" + _this.runId,
                 headers: { "Content-Type": "application/json" },
-                auth: {
-                    username: _this.options.username,
-                    password: _this.options.password,
-                },
+                auth: _this.auth,
                 data: JSON.stringify({ results: results }),
             })
                 .then(function (response) {
