@@ -1,5 +1,5 @@
 {
-  "name": "@rheutz/cypress-testrail-reporter",
+  "name": "deasyncless-cypress-testrail-reporter",
   "version": "1.4.0",
   "description": "A Testrail reporter for cypress including TestRail API basic library",
   "main": "index.js",
