@@ -86,7 +86,8 @@ var CypressTestRailReporter = /** @class */ (function (_super) {
         if (options == null) {
             throw new Error("Missing reporterOptions in cypress.json");
         }
-        if (options[name] == null) {
+        if (options[name] == null &&
+            process.env["CYPRESS_TESTRAIL_REPORTER_USERNAME"] == null) {
             throw new Error("Missing " + name + " value. Please update reporterOptions in cypress.json or set CYPRESS_TESTRAIL_REPORTER_USERNAME and CYPRESS_TESTRAIL_REPORTER_PASSWORD environment variabele");
         }
     };

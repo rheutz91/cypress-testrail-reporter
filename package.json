@@ -1,5 +1,5 @@
 {
-  "name": "deasyncless-cypress-testrail-reporter",
+  "name": "@rheutz/deasyncless-cypress-testrail-reporter",
   "version": "1.4.0",
   "description": "A Testrail reporter for cypress including TestRail API basic library",
   "main": "index.js",
@@ -9,18 +9,11 @@
     "testrail",
     "reporter"
   ],
-  "author": {
-    "name": "Ronald Heuts",
-    "email": "info@rheuts.nl"
-  },
+  "author": "Ronald Heuts <heuts.ronald+npm@gmail.com>",
   "license": "MIT",
-  "readmeFilename": "README.md",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rheutz91/cypress-testrail-reporter.git"
-  },
-  "bugs": {
-    "url": ""
+    "url": "git+https://github.com/rheutz91/cypress-testrail-reporter.git"
   },
   "scripts": {
     "tsc": "tsc",
@@ -41,5 +34,9 @@
     "chai": "^3.5.0",
     "rimraf": "^2.6.3",
     "typescript": "^2.9.2"
+  },
+  "homepage": "https://github.com/rheutz91/cypress-testrail-reporter#readme",
+  "bugs": {
+    "url": "https://github.com/rheutz91/cypress-testrail-reporter/issues"
   }
 }
